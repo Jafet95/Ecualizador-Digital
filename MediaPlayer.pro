@@ -20,12 +20,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     jack.cpp \
     dspsystem.cpp \
-    controlvolume.cpp
+    controlvolume.cpp \
+    filtro1k.cpp
 
 HEADERS  += mainwindow.h \
             jack.h \
             processor.h \
             dspsystem.h \
-    controlvolume.h
+    controlvolume.h \
+    filtro1k.h
 
 FORMS    += mainwindow.ui
