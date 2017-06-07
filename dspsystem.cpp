@@ -46,6 +46,8 @@ dspSystem::dspSystem()
 dspSystem::~dspSystem() {
     delete cv_;
     cv_;
+    delete g1k;
+    g1k;
 }
 
 
@@ -54,7 +56,13 @@ void dspSystem::updateVolume(int value){
     * Updating volume value
     */
    volumeGain_=value;
+}
 
+void dspSystem::update1kGain(int value){
+   /*
+    * Actualizar la ganancia del filtro de 1 kHz
+    */
+   gain1k = value;
 }
 
 /**
@@ -66,9 +74,12 @@ bool dspSystem::init(const int sampleRate,const int bufferSize) {
   sampleRate_ = sampleRate;
   bufferSize_ = bufferSize;
   volumeGain_ = 0;
+  gain1k = 0;
 
   delete cv_;
   cv_=new controlVolume();
+  delete g1k;
+  g1k = new filtro1k();
 
   return true;
 }
@@ -82,7 +93,8 @@ bool dspSystem::process(float* in,float* out) {
   float* tmpIn = in;
   float* tmpOut = out;
 
-  cv_->filter(bufferSize_,volumeGain_,tmpIn,tmpOut);
+  cv_ ->filter(bufferSize_,volumeGain_,tmpIn,tmpOut); //Puntero a la función del filtro en la clase controlVolume
+  g1k ->filter1k(bufferSize_,gain1k,tmpIn,tmpOut); //Puntero a la función del filtro en la clase filtro1k
 
   return true;
 }

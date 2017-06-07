@@ -30,6 +30,7 @@
 
 #include "processor.h"
 #include "controlvolume.h"
+#include "filtro1k.h"
 
 class dspSystem : public processor {
 public:
@@ -68,7 +69,11 @@ public:
    */
   virtual int setSampleRate(const int sampleRate);
 
+  //Function to update the general volume slider value into the filter controlvolume
   void updateVolume(int value);
+
+  //Función para actualizar el valor del slider de volumen en el filtro de la clase
+  void update1kGain(int value);
 
 protected:
 
@@ -88,13 +93,18 @@ protected:
 
   int volumeGain_;
 
-
   /**
-   * control Volume
+   * control Volume (class's pointer)
    */
   controlVolume* cv_;
 
-  
+  // Ganancia del filtro de 1 kHz
+  int gain1k;
+
+  //Puntero a la clase del filtro de 1 kHz
+
+  filtro1k* g1k;
+
 };
 
 
